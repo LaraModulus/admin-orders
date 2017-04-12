@@ -1,0 +1,16 @@
+{
+    "name": "LaraMod/admin-orders",
+    "description": "Laramod Admin Order Module",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nikola Katsarov",
+            "email": "katsarov@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "LaraMod/admin-core": "dev"
+    }
+}
