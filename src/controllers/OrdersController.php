@@ -4,6 +4,7 @@ namespace LaraMod\AdminOrders\Controllers;
 use App\Http\Controllers\Controller;
 use LaraMod\AdminOrders\Models\Orders;
 use Illuminate\Http\Request;
+use LaraMod\AdminOrders\Models\OrdersItems;
 
 class OrdersController extends Controller
 {
@@ -11,22 +12,22 @@ class OrdersController extends Controller
     private $data = [];
     public function __construct()
     {
-        config()->set('admincore.menu.products.active', true);
+        config()->set('admincore.menu.orders.active', true);
     }
 
     public function index()
     {
         $this->data['items'] = Orders::paginate(20);
-        return view('adminorders::orders.list', $this->data);
+        return view('adminorders::list', $this->data);
     }
 
     public function getForm(Request $request)
     {
-        $this->data['item'] = ($request->has('id') ? Orders::find($request->get('id')) : new Orders());
+        $this->data['item'] = ($request->has('id') ? Orders::with(['items.product', 'history.product'])->find($request->get('id')) : new Orders());
         if($request->wantsJson()){
             return response()->json($this->data);
         }
-        return view('adminorders::orders.form', $this->data);
+        return view('adminorders::form', $this->data);
     }
 
     public function postForm(Request $request)
@@ -34,14 +35,7 @@ class OrdersController extends Controller
 
         $order = $request->has('id') ? Orders::find($request->get('id')) : new Orders();
         try{
-            foreach(config('app.locales', [config('app.fallback_locale', 'en')]) as $locale){
-                $order->{'title_'.$locale} = $request->get('title_'.$locale);
-                $order->{'sub_title_'.$locale} = $request->get('sub_title_'.$locale);
-                $order->{'description_'.$locale} = $request->get('description_'.$locale);
-                $order->{'meta_title_'.$locale} = $request->get('meta_title_'.$locale);
-                $order->{'meta_description_'.$locale} = $request->get('meta_description_'.$locale);
-                $order->{'meta_keywords_'.$locale} = $request->get('meta_keywords_'.$locale);
-            }
+            $order->update($request->all());
             $order->save();
         }catch (\Exception $e){
             return redirect()->back()->withInput()->withErrors(['errors' => $e->getMessage()]);
@@ -75,5 +69,50 @@ class OrdersController extends Controller
         ]);
     }
 
+    public function deleteItem(Request $request){
+        if(!$request->has('id')) return abort(400, 'ID of item missing');
+        try {
+            $item = OrdersItems::find($request->get('id'));
+            $order_id = $item->order_id;
+            $item->delete();
+        }catch (\Exception $e){
+            return abort($e->getCode(), $e->getMessage());
+        }
+
+        return response()->json(['item' => Orders::with(['items.product', 'history.product'])->find($order_id)]);
+    }
+
+    public function restoreItem(Request $request){
+        if(!$request->has('id')) return abort(400, 'ID of item missing');
+        $item = OrdersItems::withTrashed()->find($request->get('id'));
+        if(!$item) return abort(404, 'Item not found');
+        try {
+            $item->restore();
+        }catch (\Exception $e){
+            return abort($e->getCode(), $e->getMessage());
+        }
+
+        return response()->json(['item' => Orders::with(['items.product', 'history.product'])->find($item->order_id)]);
+    }
+
+    public function updateItem(Request $request){
+        try{
+            $item = $request->has('id') ? OrdersItems::find($request->get('id'))->update($request->all()) : OrdersItems::create($request->all());
+        }catch (\Exception $e){
+            return abort($e->getCode(), $e->getMessage());
+        }
+        return response()->json(['item' => Orders::with(['items.product', 'history.product'])->find($item->order_id)]);
+    }
+
+    public function getItems(Request $request){
+        if($request->has('id')){
+            return response()->json(OrdersItems::find($request->get('id')));
+        }
+        $data = new OrdersItems();
+        if($request->has('order_id')){
+            $data->where('order_id', $request->get('order_id'));
+        }
+        return response()->json($data->get());
+    }
 
 }

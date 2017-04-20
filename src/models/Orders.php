@@ -24,7 +24,12 @@ class Orders extends Model
 
     public function items()
     {
-        return $this->hasMany(OrdersItems::class, 'orders_id');
+        return $this->hasMany(OrdersItems::class, 'order_id');
+    }
+
+    public function history()
+    {
+        return $this->hasMany(OrdersItems::class,'order_id')->onlyTrashed();
     }
 
 }

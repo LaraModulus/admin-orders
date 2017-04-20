@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrdersItems extends Model
 {
-    public $timestamps = true;
+    public $timestamps = false;
     protected $table = 'orders_items';
 
     use SoftDeletes;
@@ -15,14 +15,20 @@ class OrdersItems extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $casts = [
+        'qty' => 'double',
+        'price' => 'double',
+        'weight' => 'double'
+    ];
+
     public function product()
     {
-        return $this->hasOne(Products::class, 'id', 'products_items_id');
+        return $this->hasOne(Products::class, 'id', 'product_id');
     }
 
     public function order()
     {
-        return $this->hasOne(Orders::class,'id', 'orders_id');
+        return $this->hasOne(Orders::class,'id', 'order_id');
     }
 
 }

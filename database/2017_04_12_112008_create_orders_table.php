@@ -25,9 +25,10 @@ class CreateOrdersTable extends Migration
             $table->text('note')->nullable();
             $table->text('admin_note')->nullable();
             $table->boolean('seen')->index()->default(0);
-            $table->enum('status', ['new', 'in_progress', 'finished', 'canceled'])->index();
+            $table->enum('status', ['new', 'in_progress', 'finished', 'canceled'])->default('new')->index();
             $table->enum('payment_method', ['on_delivery', 'bank', 'card'])->index();
             $table->text('invoice_data')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
         });
     }
 

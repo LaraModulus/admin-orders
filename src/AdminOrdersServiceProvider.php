@@ -4,6 +4,13 @@ namespace LaraMod\AdminOrders;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AdminOrdersServiceProvider
+ *
+ * @package LaraMod\AdminOrders
+ *
+ * TODO: change payment methods to dynamic from config file
+ */
 class AdminOrdersServiceProvider extends ServiceProvider
 {
     /**
