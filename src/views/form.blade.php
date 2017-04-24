@@ -98,7 +98,11 @@
                                                 </thead>
                                                 <tbody>
                                                 <tr data-ng-repeat="item in order.items">
-                                                    <td><button type="button" class="btn btn-xs btn-danger" data-ng-click="deleteItem(item.id)"><i class="fa fa-trash"></i></button></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-xs btn-danger" data-ng-click="deleteItem(item.id)"><i class="fa fa-trash"></i></button>
+                                                        <button class="btn btn-xs btn-success" type="button" data-ng-click="openItemModal(item.id)"><i
+                                                                    class="fa fa-pencil"></i></button>
+                                                    </td>
                                                     <td>@{{ item.product_id }}</td>
                                                     <td>@{{ item.product_name }}</td>
                                                     <td>@{{ item.price | currency }}</td>
@@ -196,7 +200,8 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="product_id">Product</label>
-                            <select name="product_id" id="product_id" class="form-control" data-ng-model="item.product_id" data-ng-change="changeItemProduct()">
+                            <select name="product_id" id="product_id"
+                                    class="form-control" data-ng-model="item.product_id" data-ng-change="changeItemProduct()">
 
                                 <option value="@{{ p.id }}" data-ng-repeat="p in products" data-ng-selected="p.id == item.product_id">@{{ p.title }}</option>
                             </select>
@@ -290,11 +295,13 @@
             };
 
             $scope.openItemModal = function(item_id){
-                $scope.item = {};
+                $scope.item = {
+                    order_id: $scope.order_id
+                };
                 $scope.products = [];
                 if(item_id!==undefined){
                     $http.get('{{route('admin.orders.items')}}', {
-                        param: {
+                        params: {
                             id: item_id
                         }
                     }).then(function(response){
