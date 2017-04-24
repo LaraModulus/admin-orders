@@ -6,7 +6,7 @@ https://github.com/LaraModulus
 Installation
 ---------------
 ```
-composer require LaraMod\admin-orders
+composer require laramod\admin-orders
 ```
  **config/app.php**
  
