@@ -24,6 +24,9 @@ class AdminOrdersServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/views' => base_path('resources/views/laramod/admin-orders'),
         ]);
+        $this->publishes([
+            __DIR__.'/../database/migrations/' => database_path('migrations')
+        ], 'migrations');
 
     }
 
