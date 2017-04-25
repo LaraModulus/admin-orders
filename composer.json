@@ -1,6 +1,6 @@
 {
     "name": "laramod/admin-orders",
-    "description": "Laramod Admin Order Module",
+    "description": "LaraMod Admin Orders Module",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -16,7 +16,7 @@
     },
     "autoload": {
       "psr-4": {
-        "LaraMod\\AdminOrders\\": "src/"
+        "LaraMod\\Admin\\Orders\\": "src/"
       }
     }
 

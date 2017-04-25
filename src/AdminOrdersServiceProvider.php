@@ -1,6 +1,6 @@
 <?php
 
-namespace LaraMod\AdminOrders;
+namespace LaraMod\Admin\Orders;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +22,7 @@ class AdminOrdersServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/views', 'adminorders');
         $this->publishes([
-            __DIR__.'/views' => base_path('resources/views/laramod/admin-orders'),
+            __DIR__.'/views' => base_path('resources/views/laramod/admin/orders'),
         ]);
         $this->publishes([
             __DIR__.'/../database/migrations/' => database_path('migrations')
