@@ -1,7 +1,7 @@
 <?php
-namespace LaraMod\AdminOrders\Models;
+namespace LaraMod\Admin\Orders\Models;
 
-use LaraMod\AdminProducts\Models\Products;
+use LaraMod\Admin\Products\Models\Products;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

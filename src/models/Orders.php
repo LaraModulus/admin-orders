@@ -1,7 +1,7 @@
 <?php
-namespace LaraMod\AdminOrders\Models;
+namespace LaraMod\Admin\Orders\Models;
 
-use LaraMod\AdminCore\Scopes\AdminCoreOrderByCreatedAtScope;
+use LaraMod\Admin\Core\Scopes\AdminCoreOrderByCreatedAtScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 

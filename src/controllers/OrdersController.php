@@ -1,10 +1,10 @@
 <?php
-namespace LaraMod\AdminOrders\Controllers;
+namespace LaraMod\Admin\Orders\Controllers;
 
 use App\Http\Controllers\Controller;
-use LaraMod\AdminOrders\Models\Orders;
+use LaraMod\Admin\Orders\Models\Orders;
 use Illuminate\Http\Request;
-use LaraMod\AdminOrders\Models\OrdersItems;
+use LaraMod\Admin\Orders\Models\OrdersItems;
 
 class OrdersController extends Controller
 {
