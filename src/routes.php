@@ -2,7 +2,7 @@
 
 Route::group([
     'prefix' => 'admin/orders',
-    'middleware' => ['web', 'auth'],
+    'middleware' => ['admin', 'auth.admin'],
     'namespace' => 'LaraMod\Admin\Orders\Controllers',
 ], function(){
     Route::get('/', ['as' => 'admin.orders', 'uses' => 'OrdersController@index']);
