@@ -13,7 +13,9 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="items_table"
+                           data-page-length="10"
+                    >
                         <thead>
                         <tr>
                             <th>#</th>
@@ -23,34 +25,6 @@
                             <th><i class="fa fa-cogs"></i></th>
                         </tr>
                         </thead>
-                        <tbody>
-                        @foreach($items as $order)
-                            <tr>
-                                <td>
-                                    {{$order->id}}
-                                </td>
-                                <td>
-                                    {{$order->names }}
-                                </td>
-                                <td>
-                                    {{$order->status}}
-                                </td>
-                                <td>
-                                    {{$order->created_at->format('d.m.Y H:i')}}
-                                </td>
-                                <td>
-                                    <button type="button" class="btn btn-primary btn-xs" title="Preview" data-ng-click="previewOrder({{$order->id}})"><i class="fa fa-eye"></i></button>
-                                    <a href="{{route('admin.orders.form', ['id' => $order->id])}}" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>
-                                    <a href="{{route('admin.orders.delete', ['id' => $order->id])}}" class="btn btn-danger btn-xs require-confirm"><i class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td colspan="6">{{$items->links()}}</td>
-                        </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
@@ -184,5 +158,26 @@
         app.run(['$http', 'CSRF_TOKEN', function($http, CSRF_TOKEN) {
             $http.defaults.headers.common['X-Csrf-Token'] = CSRF_TOKEN;
         }]);
+    </script>
+@stop
+@section('js')
+    <script type="text/javascript">
+        $(function(){
+            $('#items_table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{!! route('admin.orders.datatable') !!}',
+                order: [
+                    [4, 'desc']
+                ],
+                columns: [
+                    {data:'id', name: 'ID'},
+                    {data:'names', name: 'names'},
+                    {data:'status', searchable:false, orderable:false},
+                    {data:'created_at', searchable:false},
+                    {data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+            });
+        });
     </script>
 @stop

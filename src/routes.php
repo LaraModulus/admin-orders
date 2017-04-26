@@ -15,4 +15,6 @@ Route::group([
     Route::post('items', ['as' => 'admin.orders.items', 'uses' => 'OrdersController@updateItem']);
     Route::get('items', ['as' => 'admin.orders.items', 'uses' => 'OrdersController@getItems']);
     Route::get('items/restore', ['as' => 'admin.orders.items.restore', 'uses' => 'OrdersController@restoreItem']);
+
+    Route::get('/datatable', ['as' => 'admin.orders.datatable', 'uses' => 'OrdersController@dataTable']);
 });
