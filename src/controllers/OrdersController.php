@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use LaraMod\Admin\Orders\Models\Orders;
 use Illuminate\Http\Request;
 use LaraMod\Admin\Orders\Models\OrdersItems;
+use Yajra\Datatables\Datatables;
 
 class OrdersController extends Controller
 {
@@ -113,6 +114,39 @@ class OrdersController extends Controller
             $data->where('order_id', $request->get('order_id'));
         }
         return response()->json($data->get());
+    }
+
+    public function dataTable(){
+        $items = Orders::select(['id','names', 'status', 'created_at', 'seen']);
+        return DataTables::of($items)
+            ->addColumn('action', function($item){
+                return '<button type="button" class="btn btn-primary btn-xs" title="Preview" data-ng-click="previewOrder('.$item->id.')"><i class="fa fa-eye"></i></button>'
+                       .'<a href="'.route('admin.orders.form', ['id' => $item->id]).'" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>'
+                       .'<a href="'.route('admin.orders.delete', ['id' => $item->id]).'" class="btn btn-danger btn-xs require-confirm"><i class="fa fa-trash"></i></a>';
+            })
+            ->editColumn('created_at', function($item){
+                return $item->created_at->format('d.m.Y H:i');
+            })
+            ->editColumn('status', function($item){
+               switch ($item->status){
+                   case 'in_progress':
+                       return 'In progress';
+                       break;
+                   case 'new':
+                       return 'New';
+                       break;
+                   case 'finished':
+                       return 'Finished';
+                       break;
+                   case 'canceled':
+                       return 'Canceled';
+                   default:
+                       return $item->status;
+                       break;
+               }
+            })
+            ->orderColumn('status $1','created_at $1')
+            ->make('true');
     }
 
 }
