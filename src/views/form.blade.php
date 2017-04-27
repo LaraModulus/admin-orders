@@ -200,8 +200,9 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="product_id">Product</label>
-                            <select name="product_id" id="product_id"
-                                    class="form-control" data-ng-model="item.product_id" data-ng-change="changeItemProduct()">
+
+                            <select style="width: 100%" name="product_id" id="product_id"
+                                    class="form-control select2" data-ng-model="item.product_id" data-ng-change="changeItemProduct()" aria-hidden="true" tabindex="-1">
 
                                 <option value="@{{ p.id }}" data-ng-repeat="p in products" data-ng-selected="p.id == item.product_id">@{{ p.title }}</option>
                             </select>
