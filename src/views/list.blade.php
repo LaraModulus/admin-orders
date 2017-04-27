@@ -150,6 +150,7 @@
                     })
             }
         });
+
     </script>
 @stop
 @section('css')
@@ -163,6 +164,9 @@
 @section('js')
     <script type="text/javascript">
         $(function(){
+            $('body').on('click', '[data-item]', function(e){
+                angular.element(document.getElementById('items_table')).scope().previewOrder($(this).data('item'));
+            });
             $('#items_table').DataTable({
                 processing: true,
                 serverSide: true,
