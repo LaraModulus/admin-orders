@@ -120,7 +120,7 @@ class OrdersController extends Controller
         $items = Orders::select(['id','names', 'status', 'created_at', 'seen']);
         return DataTables::of($items)
             ->addColumn('action', function($item){
-                return '<button type="button" class="btn btn-primary btn-xs" title="Preview" data-ng-click="previewOrder('.$item->id.')"><i class="fa fa-eye"></i></button>'
+                return '<button type="button" class="btn btn-primary btn-xs" title="Preview" data-item="'.$item->id.'"><i class="fa fa-eye"></i></button>'
                        .'<a href="'.route('admin.orders.form', ['id' => $item->id]).'" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>'
                        .'<a href="'.route('admin.orders.delete', ['id' => $item->id]).'" class="btn btn-danger btn-xs require-confirm"><i class="fa fa-trash"></i></a>';
             })
