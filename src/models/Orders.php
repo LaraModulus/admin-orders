@@ -15,6 +15,10 @@ class Orders extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $casts = [
+        'invoice_data' => 'object'
+    ];
+
     protected $fillable = [
         'names',
         'phone',

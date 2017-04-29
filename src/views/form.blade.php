@@ -348,3 +348,12 @@
         }]);
     </script>
 @stop
+@section('js')
+    <script>
+        $(function(){
+            $('body').on('change', '#product_id', function(e){
+                angular.element(document.getElementById('itemModal')).scope().changeItemProduct($(this).val());
+            });
+        })
+    </script>
+@stop
