@@ -1,4 +1,5 @@
 <?php
+
 namespace LaraMod\Admin\Orders\Models;
 
 use LaraMod\Admin\Products\Models\Products;
@@ -16,9 +17,9 @@ class OrdersItems extends Model
     protected $dates = ['deleted_at'];
 
     protected $casts = [
-        'qty' => 'double',
-        'price' => 'double',
-        'weight' => 'double'
+        'qty'    => 'double',
+        'price'  => 'double',
+        'weight' => 'double',
     ];
 
     protected $fillable = [
@@ -28,7 +29,7 @@ class OrdersItems extends Model
         'qty',
         'order_id',
         'weight',
-        'selected_options'
+        'selected_options',
     ];
 
     public function product()
@@ -38,7 +39,7 @@ class OrdersItems extends Model
 
     public function order()
     {
-        return $this->hasOne(Orders::class,'id', 'order_id');
+        return $this->hasOne(Orders::class, 'id', 'order_id');
     }
 
 }
