@@ -15,6 +15,21 @@ class Orders extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $fillable = [
+        'names',
+        'phone',
+        'email',
+        'city',
+        'country',
+        'address',
+        'note',
+        'admin_note',
+        'seen',
+        'status',
+        'payment_method',
+        'invoice_data'
+    ];
+
 
     protected function bootIfNotBooted()
     {

@@ -34,10 +34,9 @@ class OrdersController extends Controller
     public function postForm(Request $request)
     {
 
-        $order = $request->has('id') ? Orders::find($request->get('id')) : new Orders();
+        $order = Orders::firstOrCreate(['id' => $request->get('id')]);
         try{
-            $order->update($request->all());
-            $order->save();
+            $order->update($request->only($order->getFillable()));
         }catch (\Exception $e){
             return redirect()->back()->withInput()->withErrors(['errors' => $e->getMessage()]);
         }
@@ -98,7 +97,8 @@ class OrdersController extends Controller
 
     public function updateItem(Request $request){
         try{
-            $item = $request->has('id') ? OrdersItems::find($request->get('id'))->update($request->all()) : OrdersItems::create($request->all());
+            $item = OrdersItems::firstOrCreate(['id' => $request->get('id')]);
+            $item->update($request->only($item->getFillable()));
         }catch (\Exception $e){
             return abort($e->getCode(), $e->getMessage());
         }
