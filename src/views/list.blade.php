@@ -172,7 +172,7 @@
                 serverSide: true,
                 ajax: '{!! route('admin.orders.datatable') !!}',
                 order: [
-                    [4, 'desc']
+                    [3, 'desc']
                 ],
                 columns: [
                     {data: 'id', name: 'ID'},
