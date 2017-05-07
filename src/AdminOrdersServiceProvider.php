@@ -3,6 +3,8 @@
 namespace LaraMod\Admin\Orders;
 
 use Illuminate\Support\ServiceProvider;
+use LaraMod\Admin\Core\Traits\DashboardTrait;
+use LaraMod\Admin\Orders\Controllers\OrdersController;
 
 /**
  * Class AdminOrdersServiceProvider
@@ -13,6 +15,7 @@ use Illuminate\Support\ServiceProvider;
  */
 class AdminOrdersServiceProvider extends ServiceProvider
 {
+    use DashboardTrait;
     /**
      * Bootstrap the application services.
      *
@@ -27,6 +30,11 @@ class AdminOrdersServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../database/migrations/' => database_path('migrations'),
         ], 'migrations');
+
+        /*
+         * Add orders widget to dashboard
+         */
+        $this->addWidget($this->app->make(OrdersController::class)->ordersWidget());
 
     }
 

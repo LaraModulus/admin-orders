@@ -177,4 +177,11 @@ class OrdersController extends Controller
             ->make('true');
     }
 
+    public function ordersWidget(){
+        config()->set('admincore.menu.orders.active', false);
+        return view('adminorders::widget', [
+            'orders_count' => Orders::where('status', 'new')->count()
+        ])->render();
+    }
+
 }
