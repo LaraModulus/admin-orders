@@ -34,7 +34,12 @@ class AdminOrdersServiceProvider extends ServiceProvider
         /*
          * Add orders widget to dashboard
          */
-        $this->addWidget($this->app->make(OrdersController::class)->ordersWidget());
+        try{
+            $this->addWidget($this->app->make(OrdersController::class)->ordersWidget());
+        }catch (\Exception $e){
+            $this->addWidget($e->getMessage());
+        }
+
 
     }
 
