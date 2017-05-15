@@ -1,4 +1,5 @@
 <?php
+
 namespace LaraMod\Admin\Orders\Models;
 
 use LaraMod\Admin\Core\Scopes\AdminCoreOrderByCreatedAtScope;
@@ -15,6 +16,25 @@ class Orders extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $casts = [
+        'invoice_data' => 'object',
+    ];
+
+    protected $fillable = [
+        'names',
+        'phone',
+        'email',
+        'city',
+        'country',
+        'address',
+        'note',
+        'admin_note',
+        'seen',
+        'status',
+        'payment_method',
+        'invoice_data',
+    ];
+
 
     protected function bootIfNotBooted()
     {
@@ -29,7 +49,7 @@ class Orders extends Model
 
     public function history()
     {
-        return $this->hasMany(OrdersItems::class,'order_id')->onlyTrashed();
+        return $this->hasMany(OrdersItems::class, 'order_id')->onlyTrashed();
     }
 
 }

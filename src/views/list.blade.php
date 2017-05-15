@@ -71,8 +71,8 @@
                                     Date: @{{ order.created_at }}
                                 </p>
                                 <p data-ng-if="order.notes">
-                                Notes:<br/>
-                                @{{ order.notes }}
+                                    Notes:<br/>
+                                    @{{ order.notes }}
                                 </p>
                             </div>
                         </div>
@@ -100,18 +100,18 @@
 
                                     </tbody>
                                     <tfoot>
-                                        <tr>
-                                            <th colspan="4" class="text-right">Discount</th>
-                                            <td>@{{ -0 | currency }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="4" class="text-right">Delivery</th>
-                                            <td>@{{ 0 | currency }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th colspan="4" class="text-right">Total</th>
-                                            <td data-ng-bind="orderTotal() | currency "></td>
-                                        </tr>
+                                    <tr>
+                                        <th colspan="4" class="text-right">Discount</th>
+                                        <td>@{{ -0 | currency }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4" class="text-right">Delivery</th>
+                                        <td>@{{ 0 | currency }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="4" class="text-right">Total</th>
+                                        <td data-ng-bind="orderTotal() | currency "></td>
+                                    </tr>
                                     </tfoot>
                                 </table>
                             </div>
@@ -127,24 +127,24 @@
     </div>
     <script>
 
-        app.controller('ordersController', function($scope, $http, SweetAlert, CSRF_TOKEN, $window) {
+        app.controller('ordersController', function ($scope, $http, SweetAlert, CSRF_TOKEN, $window) {
             $scope.order = {};
 
-            $scope.orderTotal = function(){
+            $scope.orderTotal = function () {
                 var total = 0;
-                angular.forEach($scope.order.items, function(item, $index){
-                    total+=item.price*item.qty;
+                angular.forEach($scope.order.items, function (item, $index) {
+                    total += item.price * item.qty;
                 });
                 return total;
             };
 
-            $scope.previewOrder = function(order_id) {
+            $scope.previewOrder = function (order_id) {
                 $http.get('/admin/orders/form', {
                     params: {
                         id: order_id
                     }
                 })
-                    .then(function(response){
+                    .then(function (response) {
                         $scope.order = response.data.item;
                         $('#previewOrder').modal('show');
                     })
@@ -156,15 +156,15 @@
 @section('css')
     <script>
         var app = angular.module('App', ['ui.bootstrap', 'ngSanitize', 'oitozero.ngSweetAlert']);
-        app.run(['$http', 'CSRF_TOKEN', function($http, CSRF_TOKEN) {
+        app.run(['$http', 'CSRF_TOKEN', function ($http, CSRF_TOKEN) {
             $http.defaults.headers.common['X-Csrf-Token'] = CSRF_TOKEN;
         }]);
     </script>
 @stop
 @section('js')
     <script type="text/javascript">
-        $(function(){
-            $('body').on('click', '[data-item]', function(e){
+        $(function () {
+            $('body').on('click', '[data-item]', function (e) {
                 angular.element(document.getElementById('items_table')).scope().previewOrder($(this).data('item'));
             });
             $('#items_table').DataTable({
@@ -172,13 +172,13 @@
                 serverSide: true,
                 ajax: '{!! route('admin.orders.datatable') !!}',
                 order: [
-                    [4, 'desc']
+                    [3, 'desc']
                 ],
                 columns: [
-                    {data:'id', name: 'ID'},
-                    {data:'names', name: 'names'},
-                    {data:'status', searchable:false, orderable:false},
-                    {data:'created_at', searchable:false},
+                    {data: 'id', name: 'ID'},
+                    {data: 'names', name: 'names'},
+                    {data: 'status', searchable: false, orderable: false},
+                    {data: 'created_at', searchable: false},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
             });

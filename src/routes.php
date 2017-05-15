@@ -1,10 +1,10 @@
 <?php
 
 Route::group([
-    'prefix' => 'admin/orders',
+    'prefix'     => 'admin/orders',
     'middleware' => ['admin', 'auth.admin'],
-    'namespace' => 'LaraMod\Admin\Orders\Controllers',
-], function(){
+    'namespace'  => 'LaraMod\Admin\Orders\Controllers',
+], function () {
     Route::get('/', ['as' => 'admin.orders', 'uses' => 'OrdersController@index']);
     Route::get('/form', ['as' => 'admin.orders.form', 'uses' => 'OrdersController@getForm']);
     Route::post('/form', ['as' => 'admin.orders.form', 'uses' => 'OrdersController@postForm']);

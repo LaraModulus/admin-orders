@@ -17,10 +17,10 @@ class CreateOrdersItemsTable extends Migration
             $table->softDeletes();
             $table->string('product_name', 255);
             $table->integer('product_id')->unsigned()->index();
-            $table->decimal('price', 6,2);
+            $table->decimal('price', 6, 2);
             $table->decimal('qty', 6, 3)->unsigned();
             $table->integer('order_id')->unsigned()->index();
-            $table->decimal('weight', 6,3)->default(0);
+            $table->decimal('weight', 6, 3)->default(0);
             $table->text('selected_options')->nullable();
         });
     }
