@@ -5,13 +5,14 @@ namespace LaraMod\Admin\Orders\Models;
 use LaraMod\Admin\Core\Scopes\AdminCoreOrderByCreatedAtScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use LaraMod\Admin\Core\Traits\HelpersTrait;
 
 class Orders extends Model
 {
     public $timestamps = true;
     protected $table = 'orders';
 
-    use SoftDeletes;
+    use SoftDeletes, HelpersTrait;
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];
