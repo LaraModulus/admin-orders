@@ -2,6 +2,7 @@
 
 namespace LaraMod\Admin\Orders\Models;
 
+use LaraMod\Admin\Core\Traits\HelpersTrait;
 use LaraMod\Admin\Products\Models\Products;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,7 +12,7 @@ class OrdersItems extends Model
     public $timestamps = false;
     protected $table = 'orders_items';
 
-    use SoftDeletes;
+    use SoftDeletes, HelpersTrait;
     protected $guarded = ['id'];
 
     protected $dates = ['deleted_at'];

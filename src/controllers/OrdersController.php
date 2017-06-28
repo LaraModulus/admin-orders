@@ -43,9 +43,7 @@ class OrdersController extends Controller
 
         $order = Orders::firstOrCreate(['id' => $request->get('id')]);
         try {
-            $order->update(array_filter($request->only($order->getFillable()), function($key) use ($request, $order){
-                return in_array($key, array_keys($request->all())) || @$order->getCasts()[$key]=='boolean';
-            }, ARRAY_FILTER_USE_KEY));
+            $order->autoFill($request);
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['errors' => $e->getMessage()]);
         }
@@ -117,9 +115,7 @@ class OrdersController extends Controller
     {
         try {
             $item = OrdersItems::firstOrCreate(['id' => $request->get('id')]);
-            $item->update(array_filter($request->only($item->getFillable()), function($key) use ($request, $item){
-                return in_array($key, array_keys($request->all())) || @$item->getCasts()[$key]=='boolean';
-            }, ARRAY_FILTER_USE_KEY));
+            $item->autoFill($request);
         } catch (\Exception $e) {
             return abort($e->getCode(), $e->getMessage());
         }
