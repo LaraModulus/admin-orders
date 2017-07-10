@@ -41,7 +41,7 @@ class OrdersController extends Controller
     public function postForm(Request $request)
     {
 
-        $order = Orders::firstOrCreate(['id' => $request->get('id')]);
+        $order = Orders::firstOrNew(['id' => $request->get('id')]);
         try {
             $order->autoFill($request);
         } catch (\Exception $e) {
@@ -114,7 +114,7 @@ class OrdersController extends Controller
     public function updateItem(Request $request)
     {
         try {
-            $item = OrdersItems::firstOrCreate(['id' => $request->get('id')]);
+            $item = OrdersItems::firstOrNew(['id' => $request->get('id')]);
             $item->autoFill($request);
         } catch (\Exception $e) {
             return abort($e->getCode(), $e->getMessage());
